@@ -1,4 +1,26 @@
 ﻿// See https://aka.ms/new-console-template for more information
+using static KodePos;
+public class Hello
+{
+    public static void Main(String[] args)
+    {
+        EnumKodepos list = EnumKodepos.Sekejati;
+        String kodePos = getKodePos(list);
+        Console.WriteLine("Kode Pos {0} merupakan wilayah {1}", kodePos, list);
+
+        DoorMachine machine = new DoorMachine();
+        //machine.action(trigger.BukaPintu);
+        machine.action(trigger.KunciPintu);
+        if (machine.currentStatus == status.Terbuka)
+        {
+            Console.WriteLine("Pintu Terbuka");
+        } else if ((machine.currentStatus == status.Terkunci))
+        {
+            Console.WriteLine("Pintu Terkunci");
+        }
+    }
+}
+
 public class KodePos
 {
     public enum EnumKodepos
@@ -21,10 +43,31 @@ public class KodePos
         return outputKode[(int)listWilayah];
     }
 
-    public static void Main(String[] args)
+
+}
+
+
+public enum trigger { BukaPintu, KunciPintu };
+public enum status { Terkunci, Terbuka };
+public class DoorMachine
+{
+    
+    public status currentStatus;
+
+    public DoorMachine()
     {
-        EnumKodepos list = EnumKodepos.Sekejati;
-        String kodePos = getKodePos(list);
-        Console.WriteLine("Kode Pos {0} merupakan wilayah {1}", kodePos, list);
+        this.currentStatus = status.Terkunci;
+    }
+
+    public void action(trigger Trigger)
+    {
+        if (Trigger == trigger.BukaPintu)
+        {
+            this.currentStatus = status.Terbuka;
+        }
+        else if (Trigger == trigger.KunciPintu)
+        {
+            this.currentStatus = status.Terkunci;
+        }
     }
 }
